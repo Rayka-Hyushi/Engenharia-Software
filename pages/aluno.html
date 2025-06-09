@@ -61,8 +61,6 @@
                             <h6 class="dropdown-header">Ordenar por:</h6>
                             <button class="dropdown-item" onclick="setFiltro('nome', true)">Nome ↑</button>
                             <button class="dropdown-item" onclick="setFiltro('nome', false)">Nome ↓</button>
-                            <button class="dropdown-item" onclick="setFiltro('curso', true)">Curso ↑</button>
-                            <button class="dropdown-item" onclick="setFiltro('curso', false)">Curso ↓</button>
                             <button class="dropdown-item" onclick="setFiltro('matricula', true)">Matrícula ↑</button>
                             <button class="dropdown-item" onclick="setFiltro('matricula', false)">Matrícula ↓</button>
                             <button class="dropdown-item" onclick="setFiltro('evasao', true)">Evasão ↑</button>
@@ -75,12 +73,11 @@
                     <thead class="thead-light">
                         <tr>
                             <th>Nome</th>
-                            <th>Curso</th>
                             <th>Matrícula</th>
                             <th>Probabilidade de Evasão</th>
                         </tr>
                     </thead>
-                    <tbody id="tabela-alunos">
+                    <tbody id="tabela-cursos">
                         <!-- As linhas da tabela serão preenchidas dinamicamente -->
                     </tbody>
                 </table>
@@ -190,6 +187,34 @@
                 { nome: "Davi Lucas Araújo", curso: "Biologia", matricula: 202889529, probabilidade_evasao: 0.351 }
             ];
 
+            const codigosParaNomes = {
+                ADM: "Administração",
+                ARC: "Arquitetura",
+                ART: "Artes Visuais",
+                BIO: "Biologia",
+                CCO: "Ciência da Computação",
+                CON: "Contabilidade",
+                DES: "Design",
+                DIR: "Direito",
+                EDF: "Educação Física",
+                ECO: "Economia",
+                ENF: "Enfermagem",
+                ENGC: "Engenharia Civil",
+                ENGE: "Engenharia Elétrica",
+                FIL: "Filosofia",
+                FIS: "Física",
+                GEO: "Geografia",
+                HIS: "História",
+                JOR: "Jornalismo",
+                LET: "Letras",
+                MAT: "Matemática",
+                MED: "Medicina",
+                PUB: "Publicidade e Propaganda",
+                PSI: "Psicologia",
+                QUI: "Química",
+                SOC: "Sociologia"
+            };
+
             function getBarColor(evasao) {
                 if (evasao > 0.7) return "bg-danger";
                 if (evasao > 0.4) return "bg-warning";
@@ -197,12 +222,29 @@
                 return "bg-success";
             }
 
-            const tbody = document.getElementById("tabela-alunos");
-            const inputPesquisa = document.querySelector('.input-group input');
+            function getCodigoCurso() {
+                const params = new URLSearchParams(window.location.search);
+                return params.get('codigo');
+            }
 
-            let alunosFiltrados = [...alunos];
+            const tbody = document.getElementById("tabela-cursos");
+            const inputPesquisa = document.querySelector('.input-group input');
+            const codigoCurso = getCodigoCurso();
+            const nomeCurso = codigosParaNomes[codigoCurso];
+
+            let alunosFiltrados = alunos.filter(aluno => aluno.curso === nomeCurso);
             let filtroAtual = 'evasao';
             let ordemCrescente = false;
+
+            document.querySelector('.container h2')?.remove(); // Remove se já existir
+            const titulo = document.createElement('h2');
+            titulo.className = "mb-4";
+            titulo.textContent = nomeCurso ? `Alunos do curso: ${nomeCurso}` : "Curso não encontrado";
+            titulo.style.color = "#212529"; // Cor escura para melhor contraste
+            titulo.style.backgroundColor = "#fff"; // Fundo branco para contraste
+            titulo.style.padding = "0.5rem 1rem";
+            titulo.style.borderRadius = "0.25rem";
+            document.querySelector('.container').prepend(titulo);
 
             function renderTabela(lista) {
                 tbody.innerHTML = '';
@@ -214,7 +256,6 @@
                     });
                     row.innerHTML = `
                         <td>${aluno.nome}</td>
-                        <td>${aluno.curso}</td>
                         <td>${aluno.matricula}</td>
                         <td>
                             <div class="progress">
@@ -231,7 +272,6 @@
                 const termo = inputPesquisa.value.trim().toLowerCase();
                 alunosFiltrados = alunos.filter(aluno =>
                     aluno.nome.toLowerCase().includes(termo) ||
-                    aluno.curso.toLowerCase().includes(termo) ||
                     String(aluno.matricula).includes(termo) ||
                     (aluno.probabilidade_evasao * 100).toFixed(1).replace('.', ',').includes(termo) ||
                     (aluno.probabilidade_evasao * 100).toFixed(1).includes(termo)
@@ -256,12 +296,6 @@
                         valA = a.probabilidade_evasao;
                         valB = b.probabilidade_evasao;
                         return ordemCrescente ? valA - valB : valB - valA;
-                    } else if (filtroAtual === 'curso') {
-                        valA = a.curso.toLowerCase();
-                        valB = b.curso.toLowerCase();
-                        if (valA < valB) return ordemCrescente ? -1 : 1;
-                        if (valA > valB) return ordemCrescente ? 1 : -1;
-                        return 0;
                     }
                     return 0;
                 });
@@ -274,8 +308,7 @@
                 const nomesFiltro = {
                     nome: "Nome",
                     matricula: "Matrícula",
-                    evasao: "Evasão",
-                    curso: "Curso"
+                    evasao: "Evasão"
                 };
                 const ordem = ordemCrescente ? "↑" : "↓";
                 document.getElementById('texto-filtro').textContent = `${nomesFiltro[filtro]} ${ordem}`;

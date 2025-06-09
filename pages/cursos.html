@@ -1,131 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursos</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-    <header class="menu">
-    <nav class="navbar navbar-expand-sm custom-navbar d-flex align-items-center">
-      <div class="d-flex align-items-center">
-        <a class="navbar-brand" href="#">
-          <img src="../images/logo.jpg" class="logo-img img-fluid" alt="Logo">
-        </a>
-        <div class="ml-3">
-          <span class="navbar-text bem-vindo d-block">Bem-Vindo!</span>
-          <ul class="navbar-nav flex-row">
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="./home.html">Início</a>
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="./cursos.html">Cursos</a>
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="./alunos.html">Alunos</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SCI - Cursos</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../css/style.css">
+    </head>
+    <body>
+        <header class="menu">
+            <nav class="navbar navbar-expand-sm custom-navbar d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                    <a class="navbar-brand" href="home.html">
+                        <img src="../images/logo.png" class="logo-img img-fluid" alt="Logo">
+                    </a>
+                    <div class="ml-3">
+                        <span class="navbar-text bem-vindo d-block">Bem-Vindo ao Sistema de Coordenação
+                            Institucional!</span>
+                        <ul class="navbar-nav flex-row">
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="./home.html">Início</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link active" href="./cursos.html">Cursos</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="./alunos.html">Alunos</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-      <!-- Parte do usuário à direita -->
-      <div class="ml-auto d-flex align-items-center user-area">
-        <img src="../images/perfil.jpg" alt="Usuário" class="rounded-circle user-img">
-        <div class="ml-2 text-right">
-          <span class="d-block user-name">Vinicius</span>
-          <a href="../index.html" class="small text-primary">Sair</a>
-        </div>
-      </div>
-    </nav>
-  </header>
-  <main class="principal">
-    <div class="container mt-4">
-  <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Digite o nome ou código do curso aqui para pesquisar">
-    <div class="input-group-append">
-      <button class="btn pesquisa" type="button"><img src="../images/pesquisa-lupa.png" alt="lupa de pesquisa"></button>
-    </div>
-  </div>
+                <!-- Parte do usuário à direita -->
+                <div class="ml-auto d-flex align-items-center user-area">
+                    <img src="../images/perfil.jpg" alt="Usuário" class="rounded-circle user-img">
+                    <div class="ml-2 text-right">
+                        <span class="d-block user-name">Vinicius</span>
+                        <a href="../index.html" class="small text-primary">Sair</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main class="principal">
+            <div class="container mt-4">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control"
+                        placeholder="Digite o nome ou código do curso aqui para pesquisar">
+                    <div class="input-group-append">
+                        <button class="btn pesquisa" type="button"><img src="../images/pesquisa-lupa.png"
+                                alt="lupa de pesquisa"></button>
+                    </div>
+                </div>
 
-  <div class="d-flex justify-content-end mb-2">
-    <button class="btn btn-secondary">Filtro: Evasão</button>
-  </div>
+                <div class="d-flex justify-content-end mb-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownFiltro" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Filtro <span id="texto-filtro">Evasão ↓</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownFiltro">
+                            <h6 class="dropdown-header">Ordenar por:</h6>
+                            <button class="dropdown-item" onclick="setFiltro('codigo', true)">Código ↑</button>
+                            <button class="dropdown-item" onclick="setFiltro('codigo', false)">Código ↓</button>
+                            <button class="dropdown-item" onclick="setFiltro('nome', true)">Nome ↑</button>
+                            <button class="dropdown-item" onclick="setFiltro('nome', false)">Nome ↓</button>
+                            <button class="dropdown-item" onclick="setFiltro('evasao', true)">Evasão ↑</button>
+                            <button class="dropdown-item" onclick="setFiltro('evasao', false)">Evasão ↓</button>
+                        </div>
+                    </div>
+                </div>
 
-  <table class="table table-bordered table-hover bg-white">
-    <thead class="thead-light">
-      <tr>
-        <th>Código</th>
-        <th>Nome</th>
-        <th>Média de Notas</th>
-        <th>Probabilidade de Evasão Média</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Curso 1 -->
-      <tr>
-        <td>CSDIE</td>
-        <td>Curso 1</td>
-        <td>6,5</td>
-        <td>
-          <div class="progress">
-            <div class="progress-bar bg-danger" style="width: 60%;">60%</div>
-          </div>
-        </td>
-      </tr>
+                <table class="table table-bordered table-hover bg-white">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Probabilidade de Evasão Média</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-cursos">
+                        <!-- As linhas da tabela serão preenchidas dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <script>
+            const cursos = [
+                { codigo: "ADM", nome: "Administração", evasao: 33.9 },
+                { codigo: "ARC", nome: "Arquitetura", evasao: 53.9 },
+                { codigo: "ART", nome: "Artes Visuais", evasao: 48.3 },
+                { codigo: "BIO", nome: "Biologia", evasao: 51.6 },
+                { codigo: "CCO", nome: "Ciência da Computação", evasao: 44.4 },
+                { codigo: "CON", nome: "Contabilidade", evasao: 72.2 },
+                { codigo: "DES", nome: "Design", evasao: 34.5 },
+                { codigo: "DIR", nome: "Direito", evasao: 57.3 },
+                { codigo: "EDF", nome: "Educação Física", evasao: 66.1 },
+                { codigo: "ECO", nome: "Economia", evasao: 48.0 },
+                { codigo: "ENF", nome: "Enfermagem", evasao: 65.4 },
+                { codigo: "ENGC", nome: "Engenharia Civil", evasao: 77.0 },
+                { codigo: "ENGE", nome: "Engenharia Elétrica", evasao: 15.1 },
+                { codigo: "FIL", nome: "Filosofia", evasao: 46.1 },
+                { codigo: "FIS", nome: "Física", evasao: 56.1 },
+                { codigo: "GEO", nome: "Geografia", evasao: 73.7 },
+                { codigo: "HIS", nome: "História", evasao: 33.0 },
+                { codigo: "JOR", nome: "Jornalismo", evasao: 45.0 },
+                { codigo: "LET", nome: "Letras", evasao: 39.1 },
+                { codigo: "MAT", nome: "Matemática", evasao: 68.2 },
+                { codigo: "MED", nome: "Medicina", evasao: 45.9 },
+                { codigo: "PUB", nome: "Publicidade e Propaganda", evasao: 18.0 },
+                { codigo: "PSI", nome: "Psicologia", evasao: 27.1 },
+                { codigo: "QUI", nome: "Química", evasao: 60.8 },
+                { codigo: "SOC", nome: "Sociologia", evasao: 48.4 }
+            ];
 
-      <!-- Curso 2 -->
-      <tr>
-        <td>CSDIE</td>
-        <td>Curso 2</td>
-        <td>6,8</td>
-        <td>
-          <div class="progress">
-            <div class="progress-bar bg-warning" style="width: 55%;">55%</div>
-          </div>
-        </td>
-      </tr>
+            const nomesFiltro = {
+                codigo: "Código",
+                nome: "Nome",
+                evasao: "Evasão"
+            };
 
-      <!-- Curso 3 -->
-      <tr>
-        <td>CSDIE</td>
-        <td>Curso 3</td>
-        <td>7,0</td>
-        <td>
-          <div class="progress">
-            <div class="progress-bar bg-warning" style="width: 50%;">50%</div>
-          </div>
-        </td>
-      </tr>
+            function getBarColor(evasao) {
+                if (evasao > 70) return "bg-danger";
+                if (evasao > 40) return "bg-warning";
+                if (evasao > 20) return "bg-info";
+                return "bg-success";
+            }
 
-      <!-- Curso 4 -->
-      <tr>
-        <td>CSDIE</td>
-        <td>Curso 4</td>
-        <td>7,5</td>
-        <td>
-          <div class="progress">
-            <div class="progress-bar bg-success" style="width: 5%;">5%</div>
-          </div>
-        </td>
-      </tr>
+            const tbody = document.getElementById("tabela-cursos");
+            const inputPesquisa = document.querySelector('.input-group input');
 
-      <!-- Outros cursos -->
-      <tr>
-        <td>CSDIE</td>
-        <td>Curso 5</td>
-        <td>8,1</td>
-        <td>
-          <div class="progress">
-            <div class="progress-bar bg-secondary" style="width: 0%;">0%</div>
-          </div>
-        </td>
-      </tr>
-      <!-- Continue com os demais cursos... -->
-    </tbody>
-  </table>
-</div>
-  </main>
-</body>
+            let cursosFiltrados = [...cursos];
+            let filtroAtual = 'evasao';
+            let ordemCrescente = false;
+
+            cursos.forEach(curso => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                <td>${curso.codigo}</td>
+                <td>${curso.nome}</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar ${getBarColor(curso.evasao)}" style="width: ${curso.evasao}%;">
+                            ${curso.evasao.toFixed(1).replace('.', ',')}%
+                        </div>
+                    </div>
+                </td>`;
+                tbody.appendChild(row);
+            });
+
+            function renderTabela(lista) {
+                tbody.innerHTML = '';
+                lista.forEach(curso => {
+                    const row = document.createElement("tr");
+                    row.style.cursor = "pointer";
+                    row.addEventListener("click", () => {
+                        window.location.href = `alunos_curso.html?codigo=${encodeURIComponent(curso.codigo)}`;
+                    });
+                    row.innerHTML = `
+                        <td>${curso.codigo}</td>
+                        <td>${curso.nome}</td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar ${getBarColor(curso.evasao)}" style="width: ${curso.evasao}%; min-width: 60px;">
+                                    ${curso.evasao.toFixed(1).replace('.', ',')}%
+                                </div>
+                            </div>
+                        </td>`;
+                    tbody.appendChild(row);
+                });
+            }
+
+            function filtrarTabela() {
+                const termo = inputPesquisa.value.trim().toLowerCase();
+                cursosFiltrados = cursos.filter(curso =>
+                    curso.codigo.toLowerCase().includes(termo) ||
+                    curso.nome.toLowerCase().includes(termo) ||
+                    curso.evasao.toFixed(1).replace('.', ',').includes(termo) ||
+                    curso.evasao.toFixed(1).includes(termo)
+                );
+                ordenarTabela();
+            }
+
+            function ordenarTabela() {
+                cursosFiltrados.sort((a, b) => {
+                    let valA = a[filtroAtual];
+                    let valB = b[filtroAtual];
+                    if (filtroAtual === 'nome' || filtroAtual === 'codigo') {
+                        valA = valA.toLowerCase();
+                        valB = valB.toLowerCase();
+                        if (valA < valB) return ordemCrescente ? -1 : 1;
+                        if (valA > valB) return ordemCrescente ? 1 : -1;
+                        return 0;
+                    } else {
+                        return ordemCrescente ? valA - valB : valB - valA;
+                    }
+                });
+                renderTabela(cursosFiltrados);
+            }
+
+            function setFiltro(filtro, crescente) {
+                filtroAtual = filtro;
+                ordemCrescente = crescente;
+                const nomesFiltro = {
+                    codigo: "Código",
+                    nome: "Nome",
+                    evasao: "Evasão"
+                };
+                const ordem = ordemCrescente ? "↑" : "↓";
+                document.getElementById('texto-filtro').textContent = `${nomesFiltro[filtro]} ${ordem}`;
+                ordenarTabela();
+            }
+
+            // Eventos
+            inputPesquisa.addEventListener('input', filtrarTabela);
+
+            // Inicialização
+            ordenarTabela();
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    </body>
+
 </html>
