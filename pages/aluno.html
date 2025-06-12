@@ -43,29 +43,23 @@
         </header>
         <main class="principal">
             <div class="container mt-4">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control"
-                        placeholder="Digite o nome ou código do curso aqui para pesquisar">
-                    <div class="input-group-append">
-                        <button class="btn pesquisa" type="button"><img src="../images/pesquisa-lupa.png"
-                                alt="lupa de pesquisa"></button>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <img src="../images/aluno.jpg" alt="Foto do Aluno" class="rounded-circle me-3" style="width: 100px; height: 100px;">
+                            <div>
+                                <p><strong>Nome:</strong> <span id="nome-aluno"></span></p>
+                                <p><strong>Matrícula:</strong> <span id="matricula-aluno"></span></p>
+                                <p><strong>Curso:</strong> <span id="curso-aluno"></span></p>
+                            </div>
+                        </div>
+                        <p class="mt-3"><strong>Probabilidade de evasão:</strong> <span id="evasao-aluno" class="text-danger"></span></p>
+                        <button class="btn btn-primary">Ver Relatório</button>
                     </div>
                 </div>
-
-                <table class="table table-bordered table-hover bg-white">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>Disciplina</th>
-                            <th>Média</th>
-                            <th>Faltas</th>
-                            <th>Aproveitamento</th>
-                            <th>Probabilidade de Evasão</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabela-disciplinas">
-                        <!-- As linhas da tabela serão preenchidas dinamicamente -->
-                    </tbody>
-                </table>
+                <div class="container mt-4">
+                    <canvas id="graficoEvasao" width="400" height="200"></canvas>
+                </div>
             </div>
         </main>
         <script src="../javascript/dadosAlunos.js"></script>
