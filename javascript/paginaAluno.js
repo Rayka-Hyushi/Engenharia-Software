@@ -7,94 +7,80 @@ function getBarColor(evasao) {
     return "bg-success";
 }
 
-const tbody = document.getElementById("tabela-disciplinas");
-const inputPesquisa = document.querySelector('.input-group input');
-
-let alunosFiltrados = alunos.filter(aluno => aluno.curso === nomeCurso);
-let filtroAtual = 'evasao';
-let ordemCrescente = false;
-
-document.querySelector('.container h2')?.remove(); // Remove se já existir
-const titulo = document.createElement('h2');
-titulo.className = "mb-4";
-titulo.textContent = nomeCurso ? `Alunos do curso: ${nomeCurso}` : "Curso não encontrado";
-titulo.style.color = "#212529"; // Cor escura para melhor contraste
-titulo.style.backgroundColor = "#fff"; // Fundo branco para contraste
-titulo.style.padding = "0.5rem 1rem";
-titulo.style.borderRadius = "0.25rem";
-document.querySelector('.container').prepend(titulo);
-
-function renderTabela(lista) {
-    tbody.innerHTML = '';
-    lista.forEach(aluno => {
-        const row = document.createElement("tr");
-        row.style.cursor = "pointer";
-        row.addEventListener("click", () => {
-            window.location.href = `aluno.html?codigo=${encodeURIComponent(aluno.matricula)}`;
-        });
-        row.innerHTML = `
-                        <td>${aluno.nome}</td>
-                        <td>${aluno.matricula}</td>
-                        <td>
-                            <div class="progress">
-                                <div class="progress-bar ${getBarColor(aluno.probabilidade_evasao)}" style="width: ${(aluno.probabilidade_evasao * 100).toFixed(1)}%; min-width: 60px;">
-                                    ${(aluno.probabilidade_evasao * 100).toFixed(1).replace('.', ',')}%
-                                </div>
-                            </div>
-                        </td>`;
-        tbody.appendChild(row);
-    });
+function obterMatriculaDaURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("matricula");
 }
 
-function filtrarTabela() {
-    const termo = inputPesquisa.value.trim().toLowerCase();
-    alunosFiltrados = alunos.filter(aluno =>
-        aluno.nome.toLowerCase().includes(termo) ||
-        String(aluno.matricula).includes(termo) ||
-        (aluno.probabilidade_evasao * 100).toFixed(1).replace('.', ',').includes(termo) ||
-        (aluno.probabilidade_evasao * 100).toFixed(1).includes(termo)
-    );
-    ordenarTabela();
+// Função para buscar os dados do aluno pela matrícula
+function carregarDadosAluno(matricula) {
+    // Busca o aluno no array de alunos
+    const aluno = alunos.find(aluno => aluno.matricula === parseInt(matricula, 10));
+
+    if (!aluno) {
+        console.error("Aluno não encontrado!");
+        return;
+    }
+
+    // Preenche os dados do aluno na página
+    document.getElementById("nome-aluno").textContent = aluno.nome;
+    document.getElementById("matricula-aluno").textContent = aluno.matricula;
+    document.getElementById("curso-aluno").textContent = aluno.curso;
+    document.getElementById("evasao-aluno").textContent = `${(aluno.probabilidade_evasao * 100).toFixed(1)}%`;
+
+    // Renderiza o gráfico de probabilidade de evasão (exemplo fictício)
+    renderizarGraficoEvasao(aluno);
 }
 
-function ordenarTabela() {
-    alunosFiltrados.sort((a, b) => {
-        let valA, valB;
-        if (filtroAtual === 'nome') {
-            valA = a.nome.toLowerCase();
-            valB = b.nome.toLowerCase();
-            if (valA < valB) return ordemCrescente ? -1 : 1;
-            if (valA > valB) return ordemCrescente ? 1 : -1;
-            return 0;
-        } else if (filtroAtual === 'matricula') {
-            valA = a.matricula;
-            valB = b.matricula;
-            return ordemCrescente ? valA - valB : valB - valA;
-        } else if (filtroAtual === 'evasao') {
-            valA = a.probabilidade_evasao;
-            valB = b.probabilidade_evasao;
-            return ordemCrescente ? valA - valB : valB - valA;
+// Função para renderizar o gráfico de evasão (exemplo fictício)
+function renderizarGraficoEvasao(aluno) {
+    const ctx = document.getElementById("graficoEvasao").getContext("2d");
+
+    // Dados fictícios para o gráfico (substitua por dados reais, se necessário)
+    const anos = ["2020", "2021", "2022", "2023", "2024"];
+    const probabilidades = anos.map(() => (Math.random() * 100).toFixed(1)); // Exemplo aleatório
+
+    new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: anos,
+            datasets: [{
+                label: "Probabilidade de Evasão (%)",
+                data: probabilidades,
+                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderWidth: 2,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: "top"
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + "%";
+                        }
+                    }
+                }
+            }
         }
-        return 0;
     });
-    renderTabela(alunosFiltrados);
 }
 
-function setFiltro(filtro, crescente) {
-    filtroAtual = filtro;
-    ordemCrescente = crescente;
-    const nomesFiltro = {
-        nome: "Nome",
-        matricula: "Matrícula",
-        evasao: "Evasão"
-    };
-    const ordem = ordemCrescente ? "↑" : "↓";
-    document.getElementById('texto-filtro').textContent = `${nomesFiltro[filtro]} ${ordem}`;
-    ordenarTabela();
-}
-
-// Eventos
-inputPesquisa.addEventListener('input', filtrarTabela);
-
-// Inicialização
-ordenarTabela();
+// Chama a função para carregar os dados do aluno (substitua pela matrícula desejada)
+document.addEventListener("DOMContentLoaded", () => {
+    const matriculaAluno = obterMatriculaDaURL(); // Matrícula do aluno a ser carregado
+    if (matriculaAluno) {
+        carregarDadosAluno(matriculaAluno);
+    } else {
+        console.error("Matrícula não encontrada na URL!");
+    }
+});
