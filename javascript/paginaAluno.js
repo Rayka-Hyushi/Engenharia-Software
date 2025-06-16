@@ -38,7 +38,7 @@ function renderizarGraficoEvasao(aluno) {
 
     // Dados fictícios para o gráfico (substitua por dados reais, se necessário)
     const anos = ["2020", "2021", "2022", "2023", "2024"];
-    const probabilidades = anos.map(() => (Math.random() * 100).toFixed(1)); // Exemplo aleatório
+    const probabilidades = Object.values(aluno.historico_probabilidade_evasao).map(p => p * 100); // Exemplo aleatório
 
     new Chart(ctx, {
         type: "line",
