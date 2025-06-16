@@ -14,9 +14,15 @@ let alunosFiltrados = [...alunos];
 let filtroAtual = 'evasao';
 let ordemCrescente = false;
 
+function calcularMediaEvasao(historico) {
+    const probabilidades = Object.values(historico);
+    return probabilidades.reduce((acc, curr) => acc + curr, 0) / probabilidades.length;
+}
+
 function renderTabela(lista) {
     tbody.innerHTML = '';
     lista.forEach(aluno => {
+        const mediaEvasao = calcularMediaEvasao(aluno.historico_probabilidade_evasao);
         const row = document.createElement("tr");
         row.style.cursor = "pointer";
         row.addEventListener("click", () => {
@@ -28,8 +34,8 @@ function renderTabela(lista) {
                         <td>${aluno.matricula}</td>
                         <td>
                             <div class="progress">
-                                <div class="progress-bar ${getBarColor(aluno.probabilidade_evasao)}" style="width: ${(aluno.probabilidade_evasao * 100).toFixed(1)}%; min-width: 60px;">
-                                    ${(aluno.probabilidade_evasao * 100).toFixed(1).replace('.', ',')}%
+                                <div class="progress-bar ${getBarColor(mediaEvasao)}" style="width: ${(mediaEvasao * 100).toFixed(1)}%; min-width: 60px;">
+                                    ${(mediaEvasao * 100).toFixed(1).replace('.', ',')}%
                                 </div>
                             </div>
                         </td>`;
@@ -42,9 +48,7 @@ function filtrarTabela() {
     alunosFiltrados = alunos.filter(aluno =>
         aluno.nome.toLowerCase().includes(termo) ||
         aluno.curso.toLowerCase().includes(termo) ||
-        String(aluno.matricula).includes(termo) ||
-        (aluno.probabilidade_evasao * 100).toFixed(1).replace('.', ',').includes(termo) ||
-        (aluno.probabilidade_evasao * 100).toFixed(1).includes(termo)
+        String(aluno.matricula).includes(termo)
     );
     ordenarTabela();
 }
@@ -63,8 +67,8 @@ function ordenarTabela() {
             valB = b.matricula;
             return ordemCrescente ? valA - valB : valB - valA;
         } else if (filtroAtual === 'evasao') {
-            valA = a.probabilidade_evasao;
-            valB = b.probabilidade_evasao;
+            valA = calcularMediaEvasao(a.historico_probabilidade_evasao);
+            valB = calcularMediaEvasao(b.historico_probabilidade_evasao);
             return ordemCrescente ? valA - valB : valB - valA;
         } else if (filtroAtual === 'curso') {
             valA = a.curso.toLowerCase();

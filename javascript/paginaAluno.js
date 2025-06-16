@@ -26,7 +26,11 @@ function carregarDadosAluno(matricula) {
     document.getElementById("nome-aluno").textContent = aluno.nome;
     document.getElementById("matricula-aluno").textContent = aluno.matricula;
     document.getElementById("curso-aluno").textContent = aluno.curso;
-    document.getElementById("evasao-aluno").textContent = `${(aluno.probabilidade_evasao * 100).toFixed(1)}%`;
+
+    const probabilidades = Object.values(aluno.historico_probabilidade_evasao);
+    const mediaEvasao = probabilidades.reduce((acc, curr) => acc + curr, 0) / probabilidades.length;
+
+    document.getElementById("evasao-aluno").textContent = `${(mediaEvasao * 100).toFixed(1)}%`;
 
     // Renderiza o gráfico de probabilidade de evasão (exemplo fictício)
     renderizarGraficoEvasao(aluno);
@@ -37,19 +41,32 @@ function renderizarGraficoEvasao(aluno) {
     const ctx = document.getElementById("graficoEvasao").getContext("2d");
 
     // Dados fictícios para o gráfico (substitua por dados reais, se necessário)
-    const anos = ["2020", "2021", "2022", "2023", "2024"];
-    const probabilidades = Object.values(aluno.historico_probabilidade_evasao).map(p => p * 100); // Exemplo aleatório
+    const anos = Object.keys(aluno.historico_probabilidade_evasao);
+    const probabilidades = Object.values(aluno.historico_probabilidade_evasao).map(p => p * 100);
+
+    // Configuração do gráfico
+    const maxValor = Math.max(...probabilidades.map(Number));
+
+    const backgroundColors = probabilidades.map(p => {
+        const valor = parseFloat(p);
+        if (valor === maxValor) return "rgba(255, 99, 132, 0.8)";
+        else if (valor > 70) return "rgba(255, 159, 64, 0.6)";
+        else if (valor > 40) return "rgba(255, 206, 86, 0.6)";
+        else return "rgba(75, 192, 192, 0.6)";
+    })
+
+    const borderColors = backgroundColors.map(color => color.replace("0.6", "1").replace("0.8", "1"));
 
     new Chart(ctx, {
-        type: "line",
+        type: "bar",
         data: {
             labels: anos,
             datasets: [{
                 label: "Probabilidade de Evasão (%)",
                 data: probabilidades,
-                borderColor: "rgba(255, 99, 132, 1)",
-                backgroundColor: "rgba(255, 99, 132, 0.2)",
-                borderWidth: 2,
+                borderColor: borderColors,
+                backgroundColor: backgroundColors,
+                borderWidth: 1,
                 tension: 0.4
             }]
         },
@@ -65,7 +82,7 @@ function renderizarGraficoEvasao(aluno) {
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        callback: function(value) {
+                        callback: function (value) {
                             return value + "%";
                         }
                     }
