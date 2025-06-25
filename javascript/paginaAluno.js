@@ -23,6 +23,7 @@ function carregarDadosAluno(matricula) {
     }
 
     // Preenche os dados do aluno na página
+    document.getElementById("foto-aluno").src = aluno.foto;
     document.getElementById("nome-aluno").textContent = aluno.nome;
     document.getElementById("matricula-aluno").textContent = aluno.matricula;
     document.getElementById("curso-aluno").textContent = aluno.curso;

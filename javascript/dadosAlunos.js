@@ -7,7 +7,7 @@ const alunos = [
       2022: 0.92,
       2023: 0.92,
       2024: 1.0
-    }
+    }, foto: "../images/201376672.jpg"
   },
   {
     nome: "Joana Mendes", curso: "Engenharia Civil", matricula: 206533397,
@@ -27,7 +27,7 @@ const alunos = [
       2022: 0.73,
       2023: 0.25,
       2024: 0.40
-    }
+    }, foto: "../images/202710378.png"
   },
   {
     nome: "Alexandre Viana", curso: "Direito", matricula: 203631208,
@@ -37,7 +37,7 @@ const alunos = [
       2022: 0.73,
       2023: 0.25,
       2024: 0.40
-    }
+    }, foto: "../images/203631208.jpg"
   },
   {
     nome: "Joana Fernandes", curso: "Física", matricula: 209477602,
@@ -47,7 +47,7 @@ const alunos = [
       2022: 0.73,
       2023: 0.25,
       2024: 0.40
-    }
+    }, foto: "../images/209477602.png"
   },
   {
     nome: "Maria Alice Rodrigues", curso: "Enfermagem", matricula: 202507501,
@@ -257,7 +257,7 @@ const alunos = [
       2022: 0.54,
       2023: 0.40,
       2024: 0.69
-    }
+    }, foto: "../images/206533397.jpg"
   },
   {
     nome: "Ana Carolina Pires", curso: "Design", matricula: 206532076,
