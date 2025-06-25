@@ -37,7 +37,7 @@
 - João Alisson Flores
 
 ### Pauta
-- Criação de uma historias do usuário com base nos requisitos levantados. 
+- Criação de uma historia do usuário com base nos requisitos levantados. 
  
 
 ### Discussões e Decisões
@@ -101,8 +101,8 @@
 | João        | Fez a construção da página de exibição dos alunos.      | 05/06/2025  |
 | Vinicius    | Fez a construção da página de exibição dos cursos.      | 05/06/2025  |
 
-## Reunião: [Inicio do Desenvolvimento]
-**Data:** 05/05/2025  
+## Reunião: [Continuação do Desenvolvimento]
+**Data:** 05/06/2025  
 **Hora:** 13:30 as 17:30  
 **Local:** [UFSM-Sala F209]
 
@@ -112,7 +112,7 @@
 - João Alisson Flores
 
 ### Pauta
-- Inicio do Desenvolvimento do software.
+- Continuação do Desenvolvimento do software.
  
 
 ### Discussões e Decisões
@@ -122,6 +122,56 @@
 ### Ações a serem tomadas
 | Responsável | Ação                                                    | Prazo       |
 |-------------|---------------------------------------------------------|-------------|
-| Sidnei      | Criou o Repositório no Github + a estrutura da páginas. | 05/06/2025  |
-| João        | Fez a construção da página de exibição dos alunos.      | 05/06/2025  |
-| Vinicius    | Fez a construção da página de exibição dos cursos.      | 05/06/2025  |
+| Sidnei      | Desenvolveu o código javascript para exibir dados.      | 05/06/2025  |
+| João        | Fez ajustes no layout da página de exibição dos alunos. | 05/06/2025  |
+| Vinicius    | Fez ajustes no layout da página de exibição dos cursos. | 05/06/2025  |
+
+## Reunião: [Continuação do Desenvolvimento]
+**Data:** 19/06/2025  
+**Hora:** 13:30 as 17:30  
+**Local:** [UFSM-Sala F209]
+
+**Participantes:**  
+- Vinicius Abaddy
+- Sidnei dos Santos
+- João Alisson Flores
+
+### Pauta
+- Continuação do Desenvolvimento do software.
+ 
+
+### Discussões e Decisões
+- **Tópico 1:** Foi feita a distribuição de tarefas e discussão de ideias para o inicio do desenvolvimento do software.
+  
+
+### Ações a serem tomadas
+| Responsável | Ação                                                                                | Prazo       |
+|-------------|-------------------------------------------------------------------------------------|-------------|
+| Sidnei      | Aprimorou o código javascript para melhor exibição de dados.                        | 05/06/2025  |
+| João        | Finalizou o layout da página de exibição dos alunos. Auxiliou no código javascript. | 05/06/2025  |
+| Vinicius    | Finalizou o layout da página de exibição dos cursos. Auxiliou no código javascript. | 05/06/2025  |
+
+## Reunião: [Continuação do Desenvolvimento]
+**Data:** 25/06/2025  
+**Hora:** 13:30 as 17:30  
+**Local:** [UFSM-Sala F209]
+
+**Participantes:**  
+- Vinicius Abaddy
+- Sidnei dos Santos
+- João Alisson Flores
+
+### Pauta
+- Continuação do Desenvolvimento do software.
+ 
+
+### Discussões e Decisões
+- **Tópico 1:** Foi feita a distribuição de tarefas e discussão de ideias para o inicio do desenvolvimento do software.
+  
+
+### Ações a serem tomadas
+| Responsável | Ação                                                            | Prazo       |
+|-------------|-----------------------------------------------------------------|-------------|
+| Sidnei      | Finalizou o código javascrip e adicionou as imagens dos alunos. | 05/06/2025  |
+| João        | Iniciou o desenvolvimento do diagrama UML.                      | 05/06/2025  |
+| Vinicius    | Auxiliou no desenvolvimento do diagrama UML.                    | 05/06/2025  |
